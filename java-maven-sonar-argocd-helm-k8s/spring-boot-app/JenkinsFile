@@ -21,7 +21,7 @@ pipeline {
     }
     stage('Static Code Analysis') {
       environment {
-        SONAR_URL = "http://54.244.194.1:9000/"
+        SONAR_URL = "http://34.216.167.222:9000/"
       }
       steps {
         withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_AUTH_TOKEN')]) {
@@ -29,9 +29,14 @@ pipeline {
         }
       }
     }
+    stage('Login') {
+      steps {
+        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+      }
+    }
     stage('Build and Push Docker Image') {
       environment {
-        DOCKER_IMAGE = "adityakindarle/kaguya:${BUILD_NUMBER}"
+        DOCKER_IMAGE = "adityakindarle/akasha_on_sky:${BUILD_NUMBER}"
         // DOCKERFILE_LOCATION = "java-maven-sonar-argocd-helm-k8s/spring-boot-app/Dockerfile"
         REGISTRY_CREDENTIALS = credentials('docker-cred')
       }
