@@ -29,11 +29,11 @@ pipeline {
         }
       }
     }
-    stage('Login') {
-      steps {
-        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-      }
-    }
+    // stage('Login') {
+      // steps {
+        //sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+      // }
+    // }
     stage('Build and Push Docker Image') {
       environment {
         DOCKER_IMAGE = "adityakindarle/akasha_on_sky:${BUILD_NUMBER}"
